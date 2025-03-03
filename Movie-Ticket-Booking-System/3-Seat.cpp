@@ -1,3 +1,6 @@
+#include "SeatType.cpp"
+#include "SeatStatus.cpp"
+
 class Seat {
 private:
     string id;
