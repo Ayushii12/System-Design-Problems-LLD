@@ -11,15 +11,18 @@
   
 ## Entities
 - **Passenger**: Represents a passenger, with properties such as ID, name, email, and phone number
-- **Aircraft**: Represents an aircraft with properties such as tail number, model, and total no. of seas
+- **Aircraft**: Represents an aircraft with properties such as tail number, model, and total no. of seats
 - **Flight**: Represents a flight in the airline management system, with properties such as flight number, aircraft, source, destination, departure time, arrival time and available seats
-- **Seat**: Represents a seat in an aircraft with properties such as seat_no, type, price, status
+  - **FlightManager**: Provides a method to **search** for flights based on source, destination, and date 
+- **Seat**: Represents a seat in an aircraft with properties such as seat no., type, price, status
   - **SeatType**: Represents different seat types (Economy, Premium_economy, Business, First_class)
   - **SeatStatus**: Represents seat status (Available, Booked)
-- **Booking**: Represents a booking made by a user, with properties such as ID, passenger, flight, selected seats, total price, and status
+- **Booking**: Represents a booking made by a user, with properties such as ID, passenger, flight, selected seat, total price, and status
   - **BookingStatus**: Represents booking status (Pending, Confirmed, Cancelled)
+  - **BookingManager**: Provides methods to **generate** booking id, **create bookings** and **cancel bookings**. It follows the Singleton pattern to ensure a single instance of the booking manager
 - **Payment**: Represents a payment for a booking, with properties such as ID, amount, and status
   - **PaymentStatus**: Represents payment status (Completed, Pending, Failed)
+  - **PaymentProcessor**: Provides a method to process payments. It follows the Singleton pattern to ensure a single instance of the payment processor
 - **AirlineSystem**: Main class that manages the movie airline management service
   - Follows the Singleton pattern to ensure only one instance of the service exists
   - Provides methods for adding passengers/aircrafts/flights/seats, booking flights (calculate the total price), canceling a booking, processing a payment
