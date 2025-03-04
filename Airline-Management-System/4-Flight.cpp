@@ -2,12 +2,12 @@
 
 class Flight {
 private:
-    std::string flightNumber;
-    std::string source;
-    std::string destination;
-    std::time_t departureTime;
-    std::time_t arrivalTime;
-    std::vector<Seat> availableSeats;
+    string flightNumber;
+    string source;
+    string destination;
+    time_t departureTime;
+    time_t arrivalTime;
+    vector<Seat> availableSeats;
 
 public:
     // Constructor
@@ -27,15 +27,5 @@ public:
     // Function to add seats to the flight
     void addSeat(const Seat& seat) {
         availableSeats.push_back(seat);
-    }
-
-    // Function to display flight information
-    void displayInfo() const {
-        cout << "Flight Number: " << flightNumber << "\n";
-        cout << "Source: " << source << "\n";
-        cout << "Destination: " << destination << "\n";
-        cout << "Departure Time: " << ctime(&departureTime);
-        cout << "Arrival Time: " << ctime(&arrivalTime);
-        cout << "Available Seats: " << availableSeats.size() << "\n";
     }
 };
