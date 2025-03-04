@@ -11,8 +11,8 @@
   
 ## Entities
 - **Passenger**: Represents a passenger, with properties such as ID, name, email, and phone number
-- **Aircraft**: Represents an aircraft with properties such as tail number, model, and seating arrangement 
-- **Flight**: Represents a flight in the airline management system, with properties such as flight number, aircraft, source, destination, departure time, arrival time
+- **Aircraft**: Represents an aircraft with properties such as tail number, model, and total no. of seas
+- **Flight**: Represents a flight in the airline management system, with properties such as flight number, aircraft, source, destination, departure time, arrival time and available seats
 - **Seat**: Represents a seat in an aircraft with properties such as seat_no, type, price, status
   - **SeatType**: Represents different seat types (Economy, Premium_economy, Business, First_class)
   - **SeatStatus**: Represents seat status (Available, Booked)
