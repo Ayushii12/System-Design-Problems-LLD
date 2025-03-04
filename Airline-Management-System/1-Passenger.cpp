@@ -16,10 +16,4 @@ public:
     string getName() const { return name; }
     string getEmail() const { return email; }
     string getPhoneNumber() const { return phone_number; }
-
-    // Display function
-    void display() const {
-        cout << "Passenger ID: " << id << "\nName: " << name 
-             << "\nEmail: " << email << "\nPhone: " << phone_number << endl;
-    }
 };
