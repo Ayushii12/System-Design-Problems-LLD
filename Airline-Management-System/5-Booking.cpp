@@ -8,22 +8,22 @@ private:
     string bookingNumber;
     Flight flight;
     Passenger passenger;
-    vector<Seat> selected_seats;
+    Seat selected_seat;
     double price;
     BookingStatus status;
 
 public:
     // Constructor
     Booking(const string& bookingNumber, const Flight& flight, const Passenger& passenger, 
-            const vector<Seat>& booking_seats, double price)
+            const Seat& seat, double price)
         : bookingNumber(bookingNumber), flight(flight), passenger(passenger), 
-          selected_seats(booking_seats), price(price), status(BookingStatus::CONFIRMED) {}
+          selected_seat(eat), price(price), status(BookingStatus::CONFIRMED) {}
 
     // Getter functions
     string getBookingNumber() const { return bookingNumber; }
     Flight getFlight() const { return flight; }
     Passenger getPassenger() const { return passenger; }
-    vector<Seat> getSeat() const { return selected_seats; }
+    Seat getSeat() const { return selected_seat; }
     double getPrice() const { return price; }
     BookingStatus getStatus() const { return status; }
 
