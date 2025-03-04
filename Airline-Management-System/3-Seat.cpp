@@ -17,22 +17,13 @@ public:
     SeatType getType() const { return type; }
     SeatStatus getStatus() const { return status; }
 
-    // Function to reserve the seat
+    // To reserve the seat
     void reserve() {
         status = SeatStatus::RESERVED;
     }
 
-    // Function to release the seat
+    // To release the seat
     void release() {
         status = SeatStatus::AVAILABLE;
-    }
-
-    // Function to display seat information
-    void displayInfo() const {
-        std::cout << "Seat Number: " << seatNumber << "\n";
-        std::cout << "Seat Type: " << (type == SeatType::ECONOMY ? "Economy" : 
-                                       type == SeatType::PREMIUM_ECONOMY ? "Premium_Economy" : 
-                                       type == SeatType::BUSINESS ? "Business": "First Class") << "\n";
-        std::cout << "Seat Status: " << (status == SeatStatus::AVAILABLE ? "Available" : "Reserved") << "\n";
     }
 };
