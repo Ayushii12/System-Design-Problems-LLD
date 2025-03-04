@@ -4,7 +4,7 @@
 #include "2-Aircraft.cpp"
 #include "3-Seat.cpp"
 #include "4-Flight.cpp"
-#include "4b-SearchFlights.cpp"
+#include "4b-FlightManager.cpp"
 #include "5b-BookingManager.cpp"
 #include "6b-PaymentProcessor.cpp"
 
@@ -12,14 +12,14 @@ class AirlineManagementSystem {
 private:
     vector<Flight> flights;
     vector<Aircraft> aircrafts;
-    FlightSearch flightSearch;
+    FlightManager flightManager;
     BookingManager& bookingManager;
     PaymentProcessor& paymentProcessor;
 
 public:
     // Constructor
     AirlineManagementSystem()
-        : flightSearch(flights),
+        : flightManager(flights),
           bookingManager(BookingManager::getInstance()),
           paymentProcessor(PaymentProcessor::getInstance()) {}
 
@@ -35,7 +35,7 @@ public:
 
     // Search for flights based on source, destination, and date
     vector<Flight> searchFlights(const string& source, const string& destination, const tm& date) {
-        return flightSearch.searchFlights(source, destination, date);
+        return flightManager.searchFlights(source, destination, date);
     }
 
     // Book a flight
