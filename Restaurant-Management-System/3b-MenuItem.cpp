@@ -24,4 +24,14 @@ public:
 
     // Set Availability
     void setAvailability(bool status) { availability = status; }
+
+    // Display Item details
+    void displayItem() const {
+        std::cout << "ID: " << id << " | Name: " << name << " | Price: $" << price
+                  << " | Category: " << (category == ItemCategory::APPETIZER ? "Appetizer" :
+                                          category == ItemCategory::MAIN_COURSE ? "Main Course" :
+                                          category == ItemCategory::DESSERT ? "Dessert" : "Beverage")
+                  << " | " << (availability ? "Available" : "Not Available")
+                  << "\nDescription: " << description << std::endl;
+    }
 };
