@@ -1,84 +1,95 @@
 #include "1-Customer.cpp"
 #include "3-Restaurant.cpp"
 #include "4-DeliveryAgent.cpp"
+#include "5-OrderManager.cpp"
+#include "6-PaymentProcessor.cpp"
+
+using namespace std;
 
 class FoodDeliverySystem {
 private:
     static FoodDeliverySystem* instance;
     unordered_map<int, Customer> customers;
     unordered_map<int, Restaurant> restaurants;
-    unordered_map<int, DeliveryAgent> deliveryAgents;
+    vector<DeliveryAgent> deliveryAgents;
+    OrderManager* orderManager;
+    PaymentProcessor* paymentProcessor;
 
-    // Private constructor for Singleton pattern
-    FoodDeliverySystem() {}
+    // Private constructor for Singleton
+    FoodDeliverySystem() {
+        orderManager = OrderManager::getInstance();
+        paymentProcessor = PaymentProcessor::getInstance();
+    }
 
 public:
-    // Get the single instance of the system
     static FoodDeliverySystem* getInstance() {
-        if (instance == nullptr) {
+        if (!instance) {
             instance = new FoodDeliverySystem();
         }
         return instance;
     }
 
-    // Register a new customer
-    void registerCustomer(Customer customer) {
+    // Register customers
+    void registerCustomer(const Customer& customer) {
         customers[customer.getId()] = customer;
-        cout << "Customer " << customer.getName() << " registered successfully.\n";
     }
 
-    // Register a new restaurant
-    void registerRestaurant(Restaurant restaurant) {
+    // Register restaurants
+    void registerRestaurant(const Restaurant& restaurant) {
         restaurants[restaurant.getId()] = restaurant;
-        cout << "Restaurant " << restaurant.getName() << " registered successfully.\n";
     }
 
-    // Register a new delivery agent
-    void registerDeliveryAgent(DeliveryAgent agent) {
-        deliveryAgents[agent.getId()] = agent;
-        cout << "Delivery Agent " << agent.getName() << " registered successfully.\n";
+    // Register delivery agents
+    void registerDeliveryAgent(const DeliveryAgent& agent) {
+        deliveryAgents.push_back(agent);
     }
 
-    // Retrieve all available restaurants
+    // List available restaurants
     void listRestaurants() {
-        if (restaurants.empty()) {
-            cout << "No restaurants available.\n";
-            return;
-        }
         cout << "Available Restaurants:\n";
         for (const auto& pair : restaurants) {
-            cout << " - " << pair.second.getName() << "\n";
+            cout << "ID: " << pair.first << " | Name: " << pair.second.getName() << endl;
         }
     }
 
-    // Retrieve menu of a specific restaurant
+    // Display menu for a given restaurant
     void displayRestaurantMenu(int restaurantId) {
-        if (restaurants.find(restaurantId) != restaurants.end()) {
-            restaurants[restaurantId].displayMenu();
-        } else {
-            cout << "Restaurant not found.\n";
-        }
-    }
-
-    // Assign a delivery agent to an order
-    void assignDeliveryAgent(int orderId) {
-        if (orders.find(orderId) == orders.end()) {
-            cout << "Order ID " << orderId << " not found.\n";
+        if (restaurants.find(restaurantId) == restaurants.end()) {
+            cout << "Restaurant not found!" << endl;
             return;
         }
-        for (auto& pair : deliveryAgents) {
-            DeliveryAgent& agent = pair.second;
+        restaurants[restaurantId].displayMenu();
+    }
+
+    // Assign a delivery agent
+    void assignDeliveryAgent(int orderId) {
+        for (auto& agent : deliveryAgents) {
             if (agent.isAvailable()) {
-                orders[orderId].setStatus(OrderStatus::OutForDelivery);
-                agent.setAvailability(false); 
-                cout << "Order ID " << orderId << " is assigned to Delivery Agent: " 
-                          << agent.getName() << " (" << agent.getPhoneNumber() << ")\n";
+                cout << "Order ID: " << orderId << " assigned to Delivery Agent: " << agent.getName() << endl;
+                agent.setAvailability(false); // Mark agent as unavailable
                 return;
             }
         }
-        cout << "No available delivery agents at the moment.\n";
-      }
+        cout << "No available delivery agents at the moment." << endl;
+    }
+
+    // Process order payment
+    void processOrderPayment(int orderId, double amount) {
+        cout << "Processing payment for Order ID: " << orderId << endl;
+        paymentProcessor->createPayment(orderId, amount);
+        Payment payment = paymentProcessor->processPayment(orderId, amount);
+        if (payment.getStatus() == PaymentStatus::COMPLETED) {
+            cout << "Payment successful for Order ID: " << orderId << endl;
+        } else {
+            cout << "Payment failed for Order ID: " << orderId << endl;
+        }
+    }
+
+    // Simulate marking an order as delivered
+    void markOrderDelivered(int orderId) {
+        cout << "Order ID: " << orderId << " has been delivered successfully!" << endl;
+    }
 };
 
-// Initialize the Singleton instance to nullptr
+// Initialize Singleton instance
 FoodDeliverySystem* FoodDeliverySystem::instance = nullptr;
