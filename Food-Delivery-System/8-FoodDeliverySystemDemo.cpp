@@ -6,54 +6,44 @@
 #include "7-FoodDeliverySystem.cpp"
 
 int main() {
-    // Get the instance of the food delivery system (Singleton)
+    // Get the singleton instance of the FoodDeliverySystem
     FoodDeliverySystem* system = FoodDeliverySystem::getInstance();
-    
-    // Register customers
+
+    // Register Customers
     Customer customer1(1, "Alice", "1234567890", "123 Main St");
     system->registerCustomer(customer1);
 
-    Customer customer2(2, "Bob", "9876543210", "456 Elm St");
-    system->registerCustomer(customer2);
-
-    // Register restaurants
-    Restaurant restaurant1(1, "Pasta Palace");
-    Restaurant restaurant2(2, "Burger Haven");
-
-    // Add menu items
-    restaurant1.addMenuItem(MenuItem(101, "Spaghetti", 10.99));
-    restaurant1.addMenuItem(MenuItem(102, "Lasagna", 12.99));
-    
-    restaurant2.addMenuItem(MenuItem(201, "Cheeseburger", 8.99));
-    restaurant2.addMenuItem(MenuItem(202, "Fries", 3.99));
-
-    // Register restaurants in system
+    // Register Restaurants
+    Restaurant restaurant1(1, "Pizza Palace");
+    restaurant1.addMenuItem(MenuItem(101, "Margherita Pizza", 10.99));
+    restaurant1.addMenuItem(MenuItem(102, "Pepperoni Pizza", 12.99));
     system->registerRestaurant(restaurant1);
-    system->registerRestaurant(restaurant2);
 
-    // List available restaurants
+    // Register Delivery Agents
+    DeliveryAgent agent1(1, "John Doe", "9876543210", true, "Downtown");
+    system->registerDeliveryAgent(agent1);
+
+    // Display available restaurants
+    cout << "\n--- List of Available Restaurants ---\n";
     system->listRestaurants();
 
-    // Display menu for a restaurant
-    system->displayRestaurantMenu(1); 
+    // Display menu of a selected restaurant
+    cout << "\n--- Menu for Restaurant: Pizza Palace ---\n";
+    system->displayRestaurantMenu(1);
 
-    // Register delivery agents
-    DeliveryAgent agent1(1, "John Doe", "555-1111", true, "Downtown");
-    DeliveryAgent agent2(2, "Jane Smith", "555-2222", true, "Uptown");
+    // Create an order for the customer
+    vector<MenuItem> orderedItems = { MenuItem(101, "Margherita Pizza", 10.99) };
+    Order new_order = OrderManager::getInstance()->createOrder(1, 1, orderedItems); 
 
-    system->registerDeliveryAgent(agent1);
-    system->registerDeliveryAgent(agent2);
-
-    // Create an order
-    OrderManager* orderManager = OrderManager::getInstance();
-    vector<MenuItem> orderItems = { MenuItem(101, "Spaghetti", 10.99), MenuItem(102, "Lasagna", 12.99) };
-    int orderId = orderManager->createOrder(customer1, restaurant1, orderItems);
+    // Process payment for the order
+    system->processOrderPayment(new_order.getId(), new_order.getTotalAmount());
 
     // Assign a delivery agent
     system->assignDeliveryAgent(orderId);
 
-    // Simulate order delivery
+    // Mark order as delivered (Simulation)
     system->markOrderDelivered(orderId);
 
     return 0;
 }
+
