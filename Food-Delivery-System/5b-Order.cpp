@@ -1,45 +1,41 @@
 #include "5a-OrderStatus.cpp"
 #include "2b-MenuItem.cpp"
+#include "1-Customer.cpp"
+#include "3-Restaurant.cpp"
 
 class Order {
 private:
-    int id;
-    Table* table;
+    int orderId;
+    Customer customer;
+    Restaurant restaurant;
     vector<MenuItem> items;
     double totalAmount;
-    OrderStatus status;
+    OrderStatus orderStatus;
 
 public:
-    // Constructor
-    Order(int id, Table* table, const vector<MenuItem>& items)
-        : id(id), table(table), items(items), status(OrderStatus::PENDING) {
-        calculateTotal();
+    Order(int id, Customer cust, Restaurant rest)
+        : orderId(id), customer(cust), restaurant(rest), totalAmount(0.0), orderStatus(OrderStatus::Pending) {}
+
+    void addItem(MenuItem item) {
+        items.push_back(item);
+        totalAmount += item.getPrice(); 
     }
 
-    // Calculate total amount
-    void calculateTotal() {
-        totalAmount = 0.0;
-        for (const auto& item : items) {
-            totalAmount += item.getPrice();
-        }
-    }
+    void setStatus(OrderStatus status) { orderStatus = status; }
 
-    // Getters
-    int getId() const { return id; }
+    int getOrderId() const { return orderId; }
+    OrderStatus getOrderStatus() const { return orderStatus; }
     double getTotalAmount() const { return totalAmount; }
-    OrderStatus getStatus() const { return status; }
 
-    // Set Order Status
-    void setStatus(OrderStatus newStatus) { status = newStatus; }
-
-    // Display Order Details
-    void displayOrder() const {
-        std::cout << "Order ID: " << id << " | Table No: " << table->getTableNo()
-                  << " | Total: $" << totalAmount << " | Status: "
-                  << (status == OrderStatus::PENDING ? "Pending" :
-                      status == OrderStatus::PREPARING ? "Preparing" :
-                      status == OrderStatus::READY ? "Ready" :
-                      status == OrderStatus::COMPLETED ? "Completed" : "Cancelled")
-                  << std::endl;
+    void displayOrder() {
+        cout << "Order ID: " << orderId << "\n";
+        cout << "Customer: " << customer.getName() << "\n";  
+        cout << "Restaurant: " << restaurant.getName() << "\n";
+        cout << "Items Ordered:\n";
+        for (const auto& item : items) {
+            item.displayItem();  
+        }
+        cout << "Total Amount: $" << totalAmount << "\n";
+        cout << "Order Status: " << OrderStatus::statusToString(orderStatus) << "\n";
     }
 };
