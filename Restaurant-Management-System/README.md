@@ -15,6 +15,7 @@
 - **Table**: Represents a table at the restaurant with properties such as table no, Capacity, Status
   - **TableStatus**: Represents table status such as (Reserved, Occupied, Available)
 - **Menu**: Represents a menu at the restaurant with a list of menu items
+  - **ItemCategory**: Represent category of an item (Appetizer, Main-Course, Dessert, Bevarage)
   - **MenuItem**: Represent a menu item with properties such as Id, name, price, description, availability
 - **Order**: Represents an order placed by a customer with properties such as Id, table, list of menu items, total amount, order status
   - **OrderStatus**: Represents the different statuses for an order (Pending, Preparing, Ready, Completed, Cancelled)
