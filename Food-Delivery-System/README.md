@@ -17,7 +17,7 @@
   - **ItemCategory**: Represent category of an item (Appetizer, Main-Course, Dessert, Bevarage) 
   - **MenuItem**: Represent a menu item with properties such as Id, name, price, description
 - **DeliveryAgent**: Represents an agents that deliver orders with properties such as Id, name, phone no. and availability
-- **Order**: Represents an order placed by a customer with properties such as Id, table, list of menu items, total amount, order status
+- **Order**: Represents an order placed by a customer with properties such as Id, Customer, Restaurant, list of menu items, total amount, order status
   - **OrderStatus**: Represents the different statuses for an order (Pending, Confirmed, Preparing, Out-for-delivery, Delivered, and Cancelled)
   - **OrderManager**: Provides methods to generate order id, create orders and cancel orders. It follows the Singleton pattern to ensure a single instance of the booking manager
 - **Payment**: Represents a payment for an order, with properties such as ID, amount, and status
