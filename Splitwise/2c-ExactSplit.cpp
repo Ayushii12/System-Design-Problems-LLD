@@ -3,7 +3,7 @@ using namespace std;
 
 class ExactSplit : public Split {
 private:
-    double exactAmount;  /
+    double exactAmount;  
 public:
     ExactSplit(User* user, double exactAmount)
         : Split(user), exactAmount(exactAmount) {}
