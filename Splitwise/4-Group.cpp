@@ -5,10 +5,6 @@
 #include "3-Expense.cpp"
 using namespace std;
 
-// Forward declarations for User and Expense (assumed defined elsewhere)
-class User;
-class Expense;
-
 class Group {
 private:
     int groupId;
