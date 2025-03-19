@@ -1,20 +1,17 @@
 #include <iostream>
 #include "3a-VoteType.cpp"
-#include "3b-EntityType.cpp"
 using namespace std;
 
 class Vote {
 private:
     int id;
-    int userId;      // User who cast the vote
-    int entityId;    // ID of 'question' or 'answer'
-    EntityType entityType;
-    VoteType voteType;
+    int userId;    // User who cast the vote
+    VoteType type;
 
 public:
     // Constructor
-    Vote(int id, VoteType voteType, EntityType entityType, int entityId, int userId)
-        : id(id), type(voteType), entity(entityType), entityId(entityId), userId(userId) {}
+    Vote(int id, VoteType type, int userId)
+        : id(id), type(type), userId(userId) {}
 
     // Getters
     int getId() const {
@@ -23,14 +20,6 @@ public:
 
     VoteType getVoteType() const {
         return type;
-    }
-
-    EntityType getEntityType() const {
-        return entity;
-    }
-
-    int getEntityId() const {
-        return entityId;
     }
 
     int getUserId() const {
