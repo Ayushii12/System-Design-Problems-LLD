@@ -1,4 +1,0 @@
-enum EntityType {
-    QUESTION,
-    ANSWER
-};
