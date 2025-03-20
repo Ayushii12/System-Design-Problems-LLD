@@ -1,4 +1,6 @@
 #include "1-Color.cpp"
+#include <iostream>
+using namespace std;
 
 class Piece {
 protected:
