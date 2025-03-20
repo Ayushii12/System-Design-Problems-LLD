@@ -10,7 +10,8 @@
 - The system should declare the **result of the game** (Black won, White won, Draw)
 
 ## Entities
-- **Player**: 
-- **Board**: 
-- **Piece**: 
-- **ChessGame**: 
+- **Player**: Represents a player in the game and has a method to make a move on the board.
+- **Board**: Represents the chess board and manages the placement of pieces. It provides methods to get and set pieces on the board, check the validity of moves, and determine checkmate and stalemate conditions
+- **Piece**: An abstract base class representing a chess piece. It contains common attributes such as color, row, and column, and declares an abstract method canMove to be implemented by each specific piece class
+  -  **King, Queen, Rook, Bishop, Knight, Pawn**: Extends the Piece class and implements their respective movement logic in the canMove method 
+- **ChessGame**: Orchestrates the overall game flow. It initializes the board, handles player turns, and determines the game result
