@@ -1,4 +1,4 @@
-public enum Permission {
+public enum PermissionType{
     READ,
     WRITE,
     NONE
