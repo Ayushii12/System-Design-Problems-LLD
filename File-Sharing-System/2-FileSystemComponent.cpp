@@ -7,17 +7,15 @@ protected:
 
 public:
     FileSystemComponent(const string &name) : name(name) {}
-
     virtual ~FileSystemComponent() {}
 
-    // Getters
-    string getName() const { return name; }
+    virtual string getName() const { return name; }
 
-    // Setter for the component name (added for renaming functionality)
-    void setName(const string &newName) { name = newName; }
+    virtual void setName(const string &newName) { name = newName; }
 
-    // Pure virtual function to get the size of the component
-    //     - For a file, it returns the file size
-    //     - For a folder, it may return the cumulative size of its children (all the files and other folders inside this folder)
-    virtual size_t getSize() const = 0;
+    // Composite Pattern Methods: for leaf nodes these should throw exceptions.
+    virtual void add(FileSystemComponent* component) = 0;
+    virtual void remove(FileSystemComponent* component) = 0;
+    virtual FileSystemComponent* getChild(const string &name) = 0;
+    virtual void display(const string &indent) const = 0;
 };
