@@ -53,7 +53,7 @@ public:
         return versions;
     }
 
-    const PermissionsDecorator& getPermissions() const {
+    const Permissions& getPermissions() const {
         return permissions;
     }
 };
