@@ -19,3 +19,58 @@
   - System should implement **storage limits per user**, tracking the total storage used and preventing actions that exceed the quota  
 
 ## Entities
+- **User**:
+  - Properties:
+    - **username**: Unique identifier for the user
+    - **password**: Secure user password (hashed in production)
+    - **role**: User role (e.g., ADMIN, USER)
+    - **storageQuota**: Maximum storage available for the user
+    - **usedStorage**: Current storage usage
+  - **Key Methods:**
+    - `authenticate(password)`: Verifies the provided password
+    - `canUpload(fileSize)`: Checks if adding a file would exceed the quota
+    - `addFile(fileSize)`: Updates storage usage when a file is added
+    - `deleteFile(fileSize)`: Updates storage usage when a file is deleted
+- **FileSystemComponent**: (Abstract Base Class)
+  - Properties:
+    - **name**: Name of the component
+  - Key Methods:
+    - `getName()` / `setName(newName)`: Get or update the component's name
+    - `add(component)`, `remove(component)`, `getChild(name)`, `display(indent)`: Methods supporting the composite pattern
+    - `getSize()`: Returns the size of the component
+- **File**: (Extends FileSystemComponent)
+  - Properties:
+    - **content**: File data
+    - **versions**: Collection of `FileVersion` objects representing file history
+    - **permissions**: Manages file-level permissions
+  - Key Methods:
+    - `writeContent(newContent)`: Updates content and creates a new version
+    - `readContent()`: Retrieves the current content
+    - `getVersions()`: Returns file version history
+    - `getPermissions()`: Accesses file-level permissions
+- **Folder**: (Extends FileSystemComponent)
+  - Properties:
+    - **children**: Mapping (e.g., `unordered_map`) of child components (files and sub-folders) keyed by name
+    - **permissions**: Manages folder-level permissions
+  - Key Methods:
+    - `getChildren()`: Returns all child components
+- **FileVersion**
+  - Properties:
+    - **content**: A snapshot of the file's content
+    - **timestamp**: Creation time (in milliseconds) of the version
+- **Permissions**:
+  - Properties:
+    - A mapping of `User` pointers to their `PermissionType` (e.g., READ, WRITE, NONE) for a given file or folder
+- **FileSharingSystem** (Singleton Main Class)
+  - Properties:
+    - Maintains a mapping of registered users to their root `Folder` (i.e., their file hierarchy)
+  - Key Methods:
+    - `registerUser(user)`: Registers a new user and creates their root folder
+    - `getUserRoot(user)`: Retrieves the root folder for a user
+    - `addFile(user, folderPath, fileName, fileSize)`: Adds a file to the specified folder
+    - `addFolder(user, folderPath, folderName)`: Adds a new folder at the specified path
+    - `renameComponent(user, path, newName)`: Renames a file or folder
+    - `deleteComponent(user, path, fileSize)`: Deletes a file or folder and updates storage usage
+    - `updatePermissions(user, path, targetUser, newPermission)`: Updates file/folder permissions
+    - `updateFileContent(user, filePath, newContent, fileSizeDiff)`: Updates file content (creates a new version) and adjusts storage usage
+    - `search(user, name)`: Searches for files and folders by name within the user's hierarchy
