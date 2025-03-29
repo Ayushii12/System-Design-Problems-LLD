@@ -12,17 +12,17 @@
   - **100** rupees dispenser
 - When a customer requests a withdrawal (e.g., **2000 rupees**), the system processes the request in a series of steps
   - Each handler dispenses notes of its denomination and passes any remaining amount to the next handler
-**1. 2000 Rupees Handler**
-- Checks how many 2000 rupees notes can be dispensed
-  - For a request of 2000 rupees, it calculates that 10 notes (1 × 2000 = 2000) can be dispensed
-  - If the amount is perfectly divisible by 2000, the chain stops here
-  - If not (e.g., a request for 2500 rupees), it dispenses 1 note (totaling 2000 rupees) and passes the remaining 500 rupees to the next handler
-**2. 500 Rupees Handler**
-- Receives any remaining amount from the 2000 rupees handler
-  - Checks if the remaining amount can be dispensed using 500 rupees notes
-**3. 100 Rupees Handler**
-- Receives any remaining amount from the 500 rupees handler
-  - Checks if the remaining amount can be dispensed using 100 rupees notes
+- **2000 Rupees Handler**
+  - Checks how many 2000 rupees notes can be dispensed
+    - For a request of 2000 rupees, it calculates that 10 notes (1 × 2000 = 2000) can be dispensed
+    - If the amount is perfectly divisible by 2000, the chain stops here
+    - If not (e.g., a request for 2500 rupees), it dispenses 1 note (totaling 2000 rupees) and passes the remaining 500 rupees to the next handler
+- **500 Rupees Handler**
+  - Receives any remaining amount from the 2000 rupees handler
+    - Checks if the remaining amount can be dispensed using 500 rupees notes
+- **100 Rupees Handler**
+  - Receives any remaining amount from the 500 rupees handler
+    - Checks if the remaining amount can be dispensed using 100 rupees notes
 
 
 ## Structure
