@@ -36,3 +36,9 @@
   - The Client may compose chains just once or compose them dynamically, depending on the application’s logic
   - Note that a request can be sent to any handler in the chain—it doesn’t have to be the first one
 ![A2](a2.png)
+
+
+## LLD Problems
+- ATM Machine
+- Vending Machine
+- Logger System 
