@@ -15,6 +15,6 @@
 ## Entities
 - **Direction**: Enum that represents the directions of elevator movement (UP/DOWN)
 - **Request**: Represents a user request for an elevator, with properties such as source floor and destination floor
-- **Elevator**: Represents an individual elevator. It has a capacity limit and maintains a list of requests. It also has a method to process requests
+- **Elevator**: Represents an individual elevator, with properties such as id, capacity, currentFloor, currentDirection, list of requests. Also provdes a method to process requests 
 - **ElevatorManager**: Manages multiple elevators and handles user requests by finding the optimal elevator
 - **ElevatorSystemDemo**: Entry point of the application and demonstrates the usage of the elevator system
