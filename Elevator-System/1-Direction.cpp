@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
 
-enum Direction {
+enum class Direction {
     UP,
-    DOWN
+    DOWN,
+    IDLE
 };
