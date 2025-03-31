@@ -11,18 +11,21 @@ using namespace std;
 class Elevator {
 private:
     int id;
-    int capacity;
+    int capacity;  // Maximum no. of requests (i.e. trips) the elevator can queue at a time
     int currentFloor;
     Direction currentDirection;
     vector<Request> requests;
-
-    // For synchronizing access
-    mutex mtx;
-    condition_variable cv;
+    mutex mtx;  // A mutex lock that protects shared data (such as currentFloor and requests)
+    condition_variable cv; // A synchronization primitive that allows threads to wait and be notified when a condition (e.g., new request added) changes
 
 public:
     Elevator(int id, int capacity)
-        : id(id), capacity(capacity), currentFloor(1), currentDirection(UP) {}
+        : id(id), capacity(capacity), currentFloor(1), currentDirection(UP) { }
+
+    int getCurrentFloor() {
+        lock_guard<mutex> lock(mtx);
+        return currentFloor;
+    }
 
     void addRequest(const Request& request) {
         unique_lock<mutex> lock(mtx);
@@ -32,14 +35,14 @@ public:
                  << " added request: sourceFloor=" << request.getSourceFloor()
                  << ", destinationFloor=" << request.getDestinationFloor()
                  << endl;
-            cv.notify_all();
+            cv.notify_all(); // To wake any threads waiting for new requests
         }
     }
 
     Request getNextRequest() {
         unique_lock<mutex> lock(mtx);
-        while (requests.empty()) {
-            cv.wait(lock);
+        while(requests.empty()) {
+            cv.wait(lock);  // Block untill a new request arrives
         }
         Request req = requests.front();
         requests.erase(requests.begin());
@@ -47,12 +50,12 @@ public:
     }
 
     void processRequests() {
-        while (true) {
+        while (true){
             // Process all queued requests
             while (!requests.empty()) {
-                  unique_lock<mutex> lock(mtx);
-                  Request req = getNextRequest();
-                  processRequest(req);
+                unique_lock<mutex> lock(mtx);
+                Request req = getNextRequest();
+                processRequest(req);
             }
             // If no requests remain, wait until a new one arrives
             unique_lock<mutex> lock(mtx);
@@ -65,25 +68,24 @@ private:
         int startFloor = currentFloor;
         int endFloor = request.getDestinationFloor();
 
+        // Iterates floor by floor until the elevator reaches endFloor, updating currentFloor
         if (startFloor < endFloor) {
-            currentDirection = UP;
+            currentDirection = Direction.UP;
             for (int i = startFloor; i <= endFloor; i++) {
                 {
                     lock_guard<mutex> lock(mtx);
                     currentFloor = i;
                 }
-                cout << "Elevator " << id << " reached floor " << i << endl;
-                this_thread::sleep_for(chrono::seconds(1)); // simulate movement
+                this_thread::sleep_for(chrono::seconds(1)); // To simulate the time taken to travel to the next floor
             }
         } else if (startFloor > endFloor) {
-            currentDirection = DOWN;
+            currentDirection = Direction.DOWN;
             for (int i = startFloor; i >= endFloor; i--) {
                 {
                     lock_guard<mutex> lock(mtx);
                     currentFloor = i;
                 }
-                cout << "Elevator " << id << " reached floor " << i << endl;
-                this_thread::sleep_for(chrono::seconds(1)); // simulate movement
+                this_thread::sleep_for(chrono::seconds(1)); // To simulate the time taken to travel to the next floor
             }
         }
     }
@@ -91,10 +93,5 @@ private:
 public:
     void run() {
         processRequests();
-    }
-
-    int getCurrentFloor() {
-        lock_guard<mutex> lock(mtx);
-        return currentFloor;
     }
 };
